@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Configuración</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            margin: 0;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        textarea,
+        select,
+        input[type="number"],
+        input[type="date"],
+        input[type="text"][readonly] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+
+        /* Estilos para los campos no editables */
+        input[type="text"][readonly] {
+            background-color: #f2f2f2;
+            cursor: not-allowed;
+        }
+
+        input[type="submit"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .btn-back {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-back a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back a:hover {
+            background-color: #0056b3;
+        }        
+    </style>
+</head>
+<body>
+    <h1>Configuración de {{ user.username|capfirst }}</h1>
+
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Campo de nombre (no editable) -->
+        <label for="nombre">Nombre de usuario:</label>
+        <input type="text" id="nombre" value="{{ user.username }}" readonly><br>
+
+        <!-- Campo de fecha de nacimiento (editable) -->
+        <label for="fecha_nacimiento">Fecha de nacimiento:</label>
+        <input type="date" name="fecha_nacimiento" id="fecha_nacimiento" value="{{ persona.fecha_nacimiento|date:"Y-m-d" }}" required><br>
+
+        <!-- Campo de género (editable) -->
+        <label for="genero">Género:</label>
+        <select name="genero" id="genero" required>
+            <option value="Masculino" {% if persona.genero == "Masculino" %}selected{% endif %}>Masculino</option>
+            <option value="Femenino" {% if persona.genero == "Femenino" %}selected{% endif %}>Femenino</option>
+            <option value="No especificar" {% if persona.genero == "No especificar" %}selected{% endif %}>No especificar</option>
+        </select><br>
+
+        <!-- Campo de altura (editable) -->
+        <label for="altura">Altura (cm):</label>
+        <input type="number" name="altura" id="altura" value="{{ persona.altura }}" required><br>
+
+        <!-- Campo de peso (no editable) -->
+        <label for="peso">Peso actual (kg): (editable en pesos)</label>
+        <input type="text" id="peso" value="{{ persona.peso }}" readonly><br>
+
+        <!-- Botón para guardar los cambios -->
+        <input type="submit" value="Guardar cambios">
+    </form>
+    <div class="btn-back">
+        <a href="/">Volver al Inicio</a>
+    </div>    
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Formulario</title>
+  <style>
+    .input-group {
+      position: relative;
+      display: flex;
+    }
+
+    .input-group .form-control {
+      border-right: none;
+      border-radius: 3px 0 0 3px;
+    }
+
+    .input-group .input-group-text {
+      display: flex;
+      align-items: center;
+      padding: 0 10px;
+      background-color: #e9ecef;
+      border: 1px solid #ced4da;
+      border-left: none;
+      border-radius: 0 3px 3px 0;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f8f8;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    form {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    textarea,
+    select,
+    input[type="number"] {
+      width: 100%;
+      padding: 10px;
+      border-radius: 3px;
+      border: 1px solid #ccc;
+      box-sizing: border-box;
+      margin-bottom: 10px;
+    }
+
+    input[type="submit"] {
+      display: block;
+      width: 100%;
+      padding: 10px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 3px;
+      cursor: pointer;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #0056b3;
+    }
+    .btn-back {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+    }
+
+    .btn-back a {
+        display: inline-block;
+        padding: 12px 24px;
+        background-color: #007bff;
+        color: #fff;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-back a:hover {
+        background-color: #0056b3;
+    }
+    .btn-submit {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    margin-top: 20px; /* Espacio adicional arriba del botón */
+    }
+
+    .btn-submit:hover {
+        background-color: #0056b3;
+    }
+    .message-modal {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #d4edda;
+    color: #155724;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    display: none; /* Ocultamos inicialmente */
+    z-index: 9999;
+    }
+
+    .message-modal p {
+        margin: 0;
+        margin-bottom: 10px;
+    }
+
+    .message-modal.show {
+        display: block; /* Mostramos cuando se activa */
+    }    
+
+    /* Agregar espacio después de las secciones de opciones de alimentos */
+    .food-options-section {
+      margin-bottom: 10px; /* Espacio entre secciones de opciones y siguientes campos */
+      display: flex;
+      justify-content: space-between; /* Distribución equitativa de los elementos */
+    }
+
+    /* Estilo para cada una de las columnas */
+    .food-options-column {
+      flex: 1; /* Ocupa un espacio igual en la distribución */
+      padding-right: 10px; /* Espacio entre columnas */
+    }
+
+    .restriction-option-label {
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    .restriction-option-label input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    /* Estilo para las columnas de restricciones alimentarias */
+    .restriction-options-column {
+      padding-right: 10px;
+    }
+
+    /* Estilo para el título de restricciones alimentarias */
+    .restriction-title {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+    
+    /* Estilo para la sección de restricciones alimentarias */
+    .restriction-section {
+      display: flex;
+    }
+  </style>
+</head>
+<body>
+  <h1>Formulario - Dieta</h1>
+    <form id="myForm" method="POST" action="" onsubmit="showMessage();">
+        <!-- ...otros campos del formulario... -->
+        <div class="form-group food-options-section">
+          <div class="food-options-column">
+            <label for="gustan">Alimentos que te gustan:</label>
+            <div>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Legumbres y frijoles">Legumbres y frijoles</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Cereales y granos">Cereales y granos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Tubérculos y raíces">Tubérculos y raíces</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Verduras de hojas verdes">Verduras de hojas verdes</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Frutas frescas">Frutas frescas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Carnes magras">Carnes magras</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Pescados y mariscos">Pescados y mariscos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Huevos">Huevos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Lácteos">Lácteos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Frutos secos y semillas">Frutos secos y semillas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Hierbas y especias">Hierbas y especias</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Aceites y grasas saludables">Aceites y grasas saludables</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Productos horneados y pan">Productos horneados y pan</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Sopas y guisos">Sopas y guisos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Platos de pasta">Platos de pasta</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Carnes rojas">Carnes rojas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Frutas cítricas">Frutas cítricas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Frutos secos y semillas">Frutos secos y semillas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="gustan[]" value="Verduras crucíferas">Verduras crucíferas</label>
+              <!-- Otras opciones de alimentos que te gustan aquí -->
+              <label class="restriction-option-label">
+                <input type="checkbox" name="gustan" value="Otro">Otro
+                <input type="text" name="gustan[]" id="otroGustoInput" style="display: none;">
+              </label>
+            </div>
+          </div>
+          <div class="food-options-column">
+            <label for="nogustan">Alimentos que no te gustan:</label>
+            <div>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Legumbres y frijoles">Legumbres y frijoles</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Cereales y granos">Cereales y granos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Tubérculos y raíces">Tubérculos y raíces</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Verduras de hojas verdes">Verduras de hojas verdes</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Frutas frescas">Frutas frescas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Carnes magras">Carnes magras</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Pescados y mariscos">Pescados y mariscos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Huevos">Huevos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Lácteos">Lácteos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Frutos secos y semillas">Frutos secos y semillas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Hierbas y especias">Hierbas y especias</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Aceites y grasas saludables">Aceites y grasas saludables</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Productos horneados y pan">Productos horneados y pan</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Sopas y guisos">Sopas y guisos</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Platos de pasta">Platos de pasta</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Carnes rojas">Carnes rojas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Frutas cítricas">Frutas cítricas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Frutos secos y semillas">Frutos secos y semillas</label>
+              <label class="restriction-option-label"><input type="checkbox" name="nogustan[]" value="Verduras crucíferas">Verduras crucíferas</label>
+              <!-- Otras opciones de alimentos que te gustan aquí -->
+              <label class="restriction-option-label">
+                <input type="checkbox" name="nogustan" value="Otro">Otro
+                <input type="text" name="nogustan[]" id="otroNoGustoInput" style="display: none;">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="restricciones_alimentarias">Restricciones Alimentarias:</label>
+          <div class="form-group food-options-section">
+            <div class="food-options-column">
+              <div>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedad celíaca">Enfermedad celíaca</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Intolerancia a la lactosa">Intolerancia a la lactosa</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a los frutos secos">Alergia a los frutos secos</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia al marisco">Alergia al marisco</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia al huevo">Alergia al huevo</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a la soja">Alergia a la soja</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedad inflamatoria intestinal">Enfermedad inflamatoria intestinal</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Diabetes">Diabetes</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Hipertensión">Hipertensión</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia al trigo">Alergia al trigo</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia al pescado">Alergia al pescado</label>
+                <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a la carne de aves">Alergia a la carne de aves</label>
+                <!-- ... Otras opciones de restricciones alimentarias ... -->
+              </div>
+            </div>
+            <div class="food-options-column">
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a la carne de res">Alergia a la carne de res</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a la carne de cerdo">Alergia a la carne de cerdo</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedades renales">Enfermedades renales</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedad cardíaca">Enfermedad cardíaca</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedades autoinmunes">Enfermedades autoinmunes</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Alergia a la lactosa">Alergia a la lactosa</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Síndrome del intestino irritable">Síndrome del intestino irritable</label>
+              <label class="restriction-option-label"><input type="checkbox" name="restricciones_alimentarias[]" value="Enfermedades metabólicas">Enfermedades metabólicas</label>
+              <label class="restriction-option-label">
+                <input type="checkbox" name="restricciones_alimentarias" value="Otro">Otro
+                <input type="text" name="restricciones_alimentarias[]" id="otraRestriccionInput" style="display: none;">
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+        <label for="enfoque">Enfoque: </label>
+        <select class="form-control" id="enfoque" name="enfoque" onchange="toggleEnfoqueOptions()" required>
+            <option value=""disabled selected>Seleccione un enfoque</option>
+            <option value="ganancia_muscular">Ganancia muscular</option>
+            <option value="perdida_peso">Pérdida de peso</option>
+            <option value="definicion">Definición</option>
+            <option value="rehabilitacion">Rehabilitación</option>
+        </select>
+        </div>
+        <!--Opciones ganancia muscular-->
+        <div id="ganancia-muscular-options" class="additional-fields hidden">
+        <div class="form-group">
+            <label for="suplementos">¿Quieres ocupar suplementos?</label>
+            <select class="form-control" id="suplementos" name="suplementos">
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="Si">Sí</option>
+            <option value="No">No</option>
+            </select>
+        </div>
+        </div>
+        <!--Opciones perdida de peso-->
+        <div id="perdida-peso-options" class="additional-fields hidden">
+        <div class="form-group">
+            <label for="historial_alimentario">Historial alimentario (¿Que comes?)</label>
+            <textarea class="form-control" id="historial_alimentario" name="historial_alimentario" rows="3" ></textarea>
+        </div>
+        <div class="form-group">
+            <label for="habito_alimenticio">Hábito alimenticio (¿En que momento comes?)</label>
+            <textarea class="form-control" id="habitos_alimenticio" name="habitos_alimenticio" rows="3" ></textarea>
+        </div>
+        </div>
+        <!--Opciones definicion-->
+        <div id="definicion-options" class="additional-fields hidden">
+        <div class="form-group">
+            <label for="calorias_actuales">Calorías que consume actualmente</label>
+            <input type="number" class="form-control" id="calorias_actuales" name="calorias_actuales" min="0" max="5000" >
+        </div>
+        <label>Cantidad de alimentos en %: (hay que llegar a 100%) </label>
+        <div class="form-group">
+          <label for="porcentaje_proteina">Porcentaje de proteína</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="porcentaje_proteina" name="porcentaje_proteina" min="0" max="100" onchange="calculatePercentages()">
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="porcentaje_carbohidratos">Porcentaje de carbohidratos</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="porcentaje_carbohidratos" name="porcentaje_carbohidratos" min="0" max="100" onchange="calculatePercentages()">
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="porcentaje_grasas">Porcentaje de grasas</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="porcentaje_grasas" name="porcentaje_grasas" min="0" max="100" onchange="calculatePercentages()">
+            <div class="input-group-append">
+              <span class="input-group-text">%</span>
+            </div>
+          </div>
+        </div>
+        <div id="percentage-error" class="hidden" style="color: red;"></div>
+
+        <div class="form-group">
+            <label for="uso_suplementos">Uso de suplementos</label>
+            <select class="form-control" id="uso_suplementos" name="uso_suplementos" >
+            <option value="" disabled selected>Seleccione una opción</option>
+            <option value="Si">Sí</option>
+            <option value="No">No</option>
+            </select>
+        </div>
+        </div>
+        <!--Opciones rehabilitacion-->
+        <div id="rehabilitacion-options" class="additional-fields hidden">
+        <div class="form-group">
+            <label for="habitos_alimenticios">Hábitos alimenticios (¿En que momento comes?)</label>
+            <textarea class="form-control" id="habitos_alimenticios" name="habitos_alimenticios" rows="3" ></textarea>
+        </div>
+        </div>
+
+        <form id="myForm" onsubmit="submitForm();">
+          {% csrf_token %}
+          <!-- Otros campos del formulario -->
+          <input type="hidden" name="hiddenMessage" id="hiddenMessage" value="">
+          <button type="submit" class="btn-submit">Enviar</button>
+        </form>
+    </form>
+    <div id="messageModal" class="message-modal">
+      <p>Generardo tu respuesta, espera un momento...</p>
+    </div>
+    <div class="btn-back">
+      <a href="/">Volver al Inicio</a>
+    </div>
+</body>
+  <script>
+        //Despliegue de otro restricciones alimentarias
+        const otraRestriccionInput = document.getElementById('otraRestriccionInput');
+        const otraRestriccionCheckbox = document.querySelector('input[name="restricciones_alimentarias"][value="Otro"]');
+
+        otraRestriccionCheckbox.addEventListener('change', function () {
+            if (this.checked) {
+                otraRestriccionInput.style.display = 'block';
+            } else {
+                otraRestriccionInput.style.display = 'none';
+            }
+        });
+
+      //Despliegue de otro nogusta
+      const otroNoGustoInput = document.getElementById('otroNoGustoInput');
+      const otroNoGustoCheckbox = document.querySelector('input[name="nogustan"][value="Otro"]');
+
+      otroNoGustoCheckbox.addEventListener('change', function () {
+          if (this.checked) {
+              otroNoGustoInput.style.display = 'block';
+          } else {
+              otroNoGustoInput.style.display = 'none';
+          }
+      });
+
+      //Despliegue de otro gustan
+      const otroGustoInput = document.getElementById('otroGustoInput');
+      const otroCheckbox = document.querySelector('input[name="gustan"][value="Otro"]');
+
+      otroCheckbox.addEventListener('change', function () {
+          if (this.checked) {
+              otroGustoInput.style.display = 'block';
+          } else {
+              otroGustoInput.style.display = 'none';
+          }
+      });
+
+      function toggleEnfoqueOptions() {
+      const enfoque = document.getElementById('enfoque').value;
+      const gananciaMuscularOptions = document.getElementById('ganancia-muscular-options');
+      const perdidaPesoOptions = document.getElementById('perdida-peso-options');
+      const definicionOptions = document.getElementById('definicion-options');
+      const rehabilitacionOptions = document.getElementById('rehabilitacion-options');
+
+      gananciaMuscularOptions.classList.add('hidden');
+      perdidaPesoOptions.classList.add('hidden');
+      definicionOptions.classList.add('hidden');
+      rehabilitacionOptions.classList.add('hidden');
+
+      // Remover el atributo 'required' de todos los campos
+      const allFields = document.querySelectorAll('.additional-fields textarea, .additional-fields select, .additional-fields input[type="number"]');
+      allFields.forEach((field) => {
+        field.removeAttribute('required');
+      });
+
+      if (enfoque === 'ganancia_muscular') {
+        gananciaMuscularOptions.classList.remove('hidden');
+      } else if (enfoque === 'perdida_peso') {
+        perdidaPesoOptions.classList.remove('hidden');
+      } else if (enfoque === 'definicion') {
+        definicionOptions.classList.remove('hidden');
+      } else if (enfoque === 'rehabilitacion') {
+        rehabilitacionOptions.classList.remove('hidden');
+      }
+
+      // Agregar el atributo 'required' solo a los campos visibles
+      const visibleFields = document.querySelectorAll('.additional-fields:not(.hidden) textarea, .additional-fields:not(.hidden) select, .additional-fields:not(.hidden) input[type="number"]');
+      visibleFields.forEach((field) => {
+        field.setAttribute('required', 'required');
+      });
+    }
+      function calculatePercentages() {
+      const proteina = parseInt(document.getElementById('porcentaje_proteina').value);
+      const carbohidratos = parseInt(document.getElementById('porcentaje_carbohidratos').value);
+      const grasas = parseInt(document.getElementById('porcentaje_grasas').value);
+
+      const totalPorcentaje = proteina + carbohidratos + grasas;
+
+      const percentageError = document.getElementById('percentage-error');
+      const submitButton = document.querySelector('.btn-submit');
+
+      if (totalPorcentaje > 100) {
+        const excessPercentage = totalPorcentaje - 100;
+        percentageError.textContent = `¡Error! Se ha excedido en ${excessPercentage}%`;
+        percentageError.classList.remove('hidden');
+        submitButton.disabled = true;
+      } else if (totalPorcentaje < 100) {
+        const remainingPercentage = 100 - totalPorcentaje;
+        percentageError.textContent = `¡Error! Falta un ${remainingPercentage}%`;
+        percentageError.classList.remove('hidden');
+        submitButton.disabled = true;
+      } else {
+        percentageError.textContent = '';
+        percentageError.classList.add('hidden');
+        submitButton.disabled = false;
+      }
+    }
+    function submitForm() {
+      // Obtener el mensaje del formulario
+      var message = document.getElementById('message').value;
+      
+      // Construir el objeto de mensaje
+      var chatMessage = {
+        role: 'user',
+        content: message
+      };
+      
+      // Convertir el objeto de mensaje en una cadena JSON
+      var chatMessageJSON = JSON.stringify(chatMessage);
+      
+      // Guardar el mensaje en el almacenamiento local
+      localStorage.setItem('chatMessage', chatMessageJSON);
+    }
+    function showMessage() {
+      var modal = document.getElementById('messageModal');
+      modal.classList.add('show')
+    }
+  </script>
+</html>

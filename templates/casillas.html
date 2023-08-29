@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Casillas</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: calc(100% - 50px); /* Subtract height of the .btn-back div */
+      overflow: hidden; /* Prevent scrolling */
+      width: 100%; /* Set a fixed width to contain the blocks in a single row */
+    }
+
+    .block {
+      flex: 1; /* Distribute available space evenly among all blocks */
+      height: calc(50% - 40px);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+      margin: 20px;
+    }
+
+    .block:hover {
+      transform: scale(1.05);
+    }
+
+    .button {
+      font-size: 20px;
+      padding: 20px 40px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .btn-back {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      margin-bottom: 30px;
+    }
+
+    .btn-back a {
+      display: inline-block;
+      padding: 12px 24px;
+      background-color: #007bff;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .btn-back a:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+    <div class="container">
+      <div class="block">
+          <button class="button" onclick="window.location.href='/formulario'">Ganancia Muscular</button>
+      </div>
+      <div class="block">
+          <button class="button" onclick="window.location.href='/formulario_d'">Definicion Muscular</button>
+      </div>
+      <div class="block">
+          <button class="button" onclick="window.location.href='/formulario_p'">Perdida de peso</button>
+      </div>
+      <div class="block">
+          <button class="button" onclick="window.location.href='/formulario_r'">Rehabilitacion</button>
+      </div>
+    </div>
+    <div class="btn-back">
+      <a href="/">Volver al Inicio</a>
+    </div>
+</body>
+</html>

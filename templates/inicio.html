@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menú</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      padding: 20px;
+      background-color: #007bff;
+      color: white;
+      margin-top: 0; /* Eliminamos el margen superior */
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      margin-left: 20px;
+    }
+
+    .login-register {
+      display: flex;
+      align-items: center;
+    }
+
+    .button {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin-left: 10px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button-registro {
+      font-size: 20px;
+      padding: 10px 20px;
+      margin-left: 10px;
+      margin-right: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+    .button-cerrarsesion{
+      font-size: 20px;
+      padding: 10px 20px;
+      margin-left: 10px;
+      margin-right: 20px;
+      background-color: #fff;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+
+        .welcome-message {
+      font-size: 24px;
+      margin-right: 10px;
+      font-family: Arial, sans-serif;
+    }
+
+    .logout-button {
+      color: black;
+      text-decoration: none;
+      font-size: 16px;
+      padding: 10px;
+      background-color: #f8f9fa;
+      border-radius: 4px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-gap: 20px;
+      width: 800px;
+      height: 800px;
+    }
+
+    .block {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #f8f9fa;
+      border: 1px solid #ddd;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease-in-out;
+      margin-top: 20px;
+    }
+
+    .block:hover {
+      transform: scale(1.05);
+    }
+
+    .message-modal {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: #d4edda;
+      color: #155724;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+      display: none; /* Ocultamos inicialmente */
+      z-index: 9999;
+      font-size: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    .message-modal p {
+      margin: 0;
+      margin-bottom: 10px;
+    }
+
+    .message-modal.show {
+      display: block; /* Mostramos cuando se activa */
+    }
+    
+    .configuracion-block {
+      background-image: url('https://cdn.discordapp.com/attachments/781735776006307860/1144334517998465114/descargar.png');
+      background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el bloque */
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative; /* Necesario para que el contenido (botón) sea posicionado correctamente */
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .configuracion-block:hover {
+      transform: scale(1.05); /* Aplicamos el efecto de zoom al pasar el mouse */
+    }
+
+    .casillas-button {
+      background-color: #007bff; /* Color de fondo original del botón */
+      color: white;
+      padding: 10px 20px;
+      font-size: 18px;
+      cursor: pointer;
+      position: relative; /* Asegura que el botón esté posicionado correctamente */
+      z-index: 1; /* Asegura que el botón esté por encima de la imagen de fondo */
+    }
+
+    .ejercicios-block {
+      background-image: url('https://cdn.discordapp.com/attachments/781735776006307860/1144337573897056356/descargar_9.png');
+      background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el bloque */
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative; /* Necesario para que el contenido (botón) sea posicionado correctamente */
+      transition: transform 0.3s ease-in-out; /* Agregamos la transición para el efecto de zoom */
+    }
+
+    .ejercicios-block:hover{
+      transform: scale(1.05); /* Aplicamos el efecto de zoom al pasar el mouse */
+    }
+
+    .pesos-block {
+      background-image: url('https://cdn.discordapp.com/attachments/781735776006307860/1144339091975065671/descargar.png');
+      background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el bloque */
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative; /* Necesario para que el contenido (botón) sea posicionado correctamente */
+      transition: transform 0.3s ease-in-out; /* Agregamos la transición para el efecto de zoom */
+    }
+
+    .pesos-block:hover{
+      transform: scale(1.05); /* Aplicamos el efecto de zoom al pasar el mouse */
+    }
+
+    .dieta-block {
+      background-image: url('https://cdn.discordapp.com/attachments/781735776006307860/1144340598023782400/descargar_2.png');
+      background-size: cover; /* Ajusta el tamaño de la imagen para cubrir el bloque */
+      background-color: transparent;
+      border: none;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-top: 20px;
+      position: relative; /* Necesario para que el contenido (botón) sea posicionado correctamente */
+      transition: transform 0.3s ease-in-out; /* Agregamos la transición para el efecto de zoom */
+    }
+
+    .dieta-block:hover{
+      transform: scale(1.05); /* Aplicamos el efecto de zoom al pasar el mouse */
+    }
+
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="logo">IA FitPlan</div>
+      <div class="login-register">
+        {% if mail_sent %}
+        <div class="message-modal show">
+            <p>¡Correo enviado exitosamente!</p>
+        </div>
+        {% endif %}    
+        <!-- Condición para mostrar el mensaje de bienvenida y el botón de cierre de sesión -->
+        {% if user.is_authenticated %}
+          <div class="welcome-message">Hola {{ user.username|capfirst }}</div>
+          <button class="button-cerrarsesion" onclick="window.location.href='/logout'">Cerrar sesión</button>
+        <!-- Condición para mostrar los botones de inicio de sesión y registro -->
+        {% else %}
+          <button class="button" onclick="window.location.href='/login'">Iniciar Sesión</button>
+          <button class="button-registro" onclick="window.location.href='/register'">Registrarse</button>
+        {% endif %}
+      </div>
+    </div>
+    <div class="grid">
+      <div class="ejercicios-block">
+        <button class="casillas-button" onclick="window.location.href='/casillas'">Ejercicios</button>
+      </div>
+      <div class="dieta-block">
+        <button class="casillas-button" onclick="window.location.href='/formulario_dieta'">Dieta</button>
+      </div>
+      <div class="pesos-block">
+        <button class="casillas-button " onclick="window.location.href='/pesos'">Pesos</button>
+      </div>
+      <div class="configuracion-block">
+        <button class="casillas-button " onclick="window.location.href='/configuracion'">Configuración</button>
+      </div>
+    </div>
+  </div>
+</body>
+<script>
+  function showMessage() {
+      var modal = document.querySelector('.message-modal');
+      modal.classList.add('show');
+
+      setTimeout(function () {
+          modal.classList.remove('show');
+      }, 3000);
+  }
+  
+  window.onload = function() {
+      var modal = document.querySelector('.message-modal');
+      setTimeout(function () {
+          modal.classList.remove('show');
+      }, 3000);
+  }
+</script>
+</html>

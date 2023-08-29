@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Conversaciones anteriores</h1>
+
+<p>Existen {{ chats|length }} conversaciones anteriores.</p>
+
+{% if chats %}
+  <form id="conversationForm" method="post" action="{% url 'chatbot' %}">
+    {% csrf_token %}
+    <select id="resetConversationSelect" name="reset_conversation_id">
+      <option value="" selected disabled>Select conversation</option>
+      {% for chat in chats %}
+      <option value="{{ chat.id }}" {% if selected_conversation_id == chat.id %}selected{% endif %}>{{ chat.id }}</option>
+      {% endfor %}
+    </select>    
+    <input type="hidden" id="selectedConversationId" name="selected_conversation_id" value="">
+    <input type="submit" value="Start Conversation">
+  </form>
+{% else %}
+  <p>No hay conversaciones anteriores.</p>
+{% endif %}
+<script>
+  // JavaScript code to set the selected conversation ID value
+  const selectElement = document.getElementById('resetConversationSelect');
+  const hiddenInputElement = document.getElementById('selectedConversationId');
+  selectElement.addEventListener('change', (event) => {
+    hiddenInputElement.value = event.target.value;
+  });
+</script>
+{% endblock %}

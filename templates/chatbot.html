@@ -1,0 +1,186 @@
+{% extends 'base.html' %}
+
+{% block styles %}
+<style>
+    body, html {
+      height: 100%;
+    }
+
+    .messages-box {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .messages-list {
+      padding-left: 0;
+    }
+
+    .message {
+      margin-bottom: 15px;
+      list-style: none;
+    }
+
+    .message-text {
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .sent {
+      background-color: #dcf8c6;
+      align-self: flex-end;
+    }
+
+    .received {
+      background-color: #f1f0f0;
+      align-self: flex-start;
+    }
+
+    .message-form {
+      display: flex;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 10px;
+      background-color: #f8f9fa;
+    }
+
+    .message-input {
+      flex: 1;
+      border-radius: 0;
+      border-right: none;
+    }
+
+    .btn-send {
+      border-radius: 0;
+    }
+
+    .chat-container {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+  </style>
+{% endblock %}
+
+
+{% block content %}
+<div class="chat-container">
+  <div class="card flex-grow-1">
+    <div class="card-header bg-primary text-white">ChatGPT</div>
+    {% if user.is_authenticated %}
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <div>
+        <b>Hola, {{user.username}}, realiza las consultas a ChatGPT</b>
+        <a style="color: yellow;" href="logout">Cerrar sesión</a>
+      </div>
+      <div>
+        <form class="form-inline" action="" method="POST">
+          {% csrf_token %}
+          <select class="form-control mr-2" name="reset_conversation_id">
+            <option value="">Seleccionar conversación</option>
+            {% for chat in chats %}
+              <option value="{{ chat.id }}">{{ chat.created_at }}</option>
+            {% endfor %}
+          </select>
+          <button type="submit" class="btn btn-danger btn-restart">Reiniciar Chat</button>
+          <a href="{% url 'conversation_list' %}" class="btn btn-primary">Seleccionar Conversación</a>
+        </form>
+      </div>
+    </div>    
+    {% else %}
+    <div class="card-header bg-primary text-white">
+      <a style="color: yellow" href="login">Inicio Sesion</a> /// <a style="color: yellow;" href="register">Registro</a>
+    </div>
+    {% endif %}
+
+    <div class="card-body messages-box">
+      <ul class="list-unstyled messages-list">
+        <!-- Mensajes de chat -->
+      </ul>
+    </div>
+  </div>
+  <form class="message-form">
+    {% csrf_token %}
+    <div class="input-group">
+      <input type="text" class="form-control message-input" placeholder="Escribe tu pregunta">
+      <div class="input-group-append">
+        <button type="submit" class="btn btn-primary btn-send">Enviar</button>
+      </div>
+    </div>
+  </form>  
+</div>
+
+<script>
+  const messagesList = document.querySelector('.messages-list');
+  const messageForm = document.querySelector('.message-form');
+  const messageInput = document.querySelector('.message-input');
+  const restartButton = document.querySelector('.btn-restart');
+
+  messageForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const message = messageInput.value.trim();
+    if (message.length === 0) {
+      return;
+    }
+
+    const messageItem = createMessageItem('sent', 'Tu', message);
+    messagesList.appendChild(messageItem);
+
+    messageInput.value = '';
+
+    sendMessage(message);
+  });
+
+  restartButton.addEventListener('click', () => {
+    resetConversation();
+  });
+
+  function createMessageItem(role, sender, content) {
+    const messageItem = document.createElement('li');
+    messageItem.classList.add('message', role);
+    messageItem.innerHTML = `
+        <div class="message-text">
+            <div class="message-sender">
+                <b>${sender}</b>
+            </div>
+            <div class="message-content">
+                ${content}
+            </div>
+        </div>`;
+    return messageItem;
+  }
+
+  function sendMessage(message) {
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': message
+      })
+    })
+      .then(response => response.json())
+      .then(data => {
+        const response = data.response;
+        const messageItem = createMessageItem('received', 'ChatGPT', response);
+        messagesList.appendChild(messageItem);
+      });
+  }
+
+  function resetConversation() {
+    fetch('', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({
+        'csrfmiddlewaretoken': document.querySelector('[name=csrfmiddlewaretoken]').value,
+        'message': 'secreta'
+      })
+    })
+      .then(() => {
+        messagesList.innerHTML = ''; // Limpiar mensajes
+      });
+  }
+</script>
+{% endblock %}

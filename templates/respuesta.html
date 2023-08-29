@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Respuesta</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f8f8f8;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-size: 18px;
+            line-height: 1.5;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: #333;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .form-container {
+            display: flex;
+            align-items: center;
+        }
+
+        .form-container p {
+            margin: 0;
+            margin-right: 10px;
+        }
+
+        .form-container input[type=text] {
+            font-size: 16px;
+            padding: 8px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+
+        .form-container input[type=submit] {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+        }
+
+        .message-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none; /* Ocultamos inicialmente */
+            z-index: 9999;
+        }
+
+        .message-modal p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .message-modal.show {
+            display: block; /* Mostramos cuando se activa */
+        }
+         .btn-back {
+            display: block;
+            margin-top: 30px;
+            text-align: left;
+        }
+
+        .btn-back a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back a:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <h1>Respuesta generada:</h1>
+    <pre>{{ response }}</pre>
+
+    <div class="container">
+        <div class="btn-back">
+            <a href="/">Volver al Inicio</a>
+        </div>
+        <div class="form-container">
+            <p>¿Necesitas esto en tu correo?</p>
+            <form action="#" method="POST" onsubmit="showMessage()">
+                {% csrf_token %}
+                <input type="text" name="mail" placeholder="demo@example.com">
+                <input type="submit" value="Enviar">
+            </form>
+        </div>
+    </div>
+    <!-- Ventana emergente (modal) para mostrar el mensaje -->
+    <div id="messageModal" class="message-modal">
+        <p>Enviando Correo...</p>
+    </div>
+</body>
+<script>
+    // Función para mostrar la ventana emergente (modal) con el mensaje
+    function showMessage() {
+        var modal = document.getElementById('messageModal');
+        modal.classList.add('show'); // Agregamos la clase 'show' para mostrar el modal
+        setTimeout(function() {
+            modal.classList.remove('show'); // Quitamos la clase 'show' después de 3 segundos
+        }, 3000);
+    }
+</script>
+</html>

@@ -1,0 +1,397 @@
+{% extends 'base.html' %}
+
+{% block title %}Register{% endblock %}
+
+{% block styles %}
+<style>
+  body {
+    background-color: #f0f0f0;
+  }
+  .register-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+  }
+  .card {
+    max-width: 400px;
+  }
+  .card-header {
+    background-color: #007bff;
+    color: white;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+  }
+  .card-body {
+    padding: 30px;
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  label {
+    font-weight: bold;
+    display: block;
+    margin-bottom: 5px;
+  }
+  input[type=text], input[type=password], input[type=date] {
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    font-size: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 10px;
+  }
+  button[type=submit] {
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+  }
+  button[type=submit]:hover {
+    background-color: #0062cc;
+  }
+  .alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #f5c6cb;
+    border-radius: 4px;
+  }
+  .btn-volver {
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 100%;
+    height: 40px;
+    margin-top: 5px; /* Agregamos margen superior */
+  }
+
+  .additional-fields {
+    display: none;
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="register-container">
+  <div class="card">
+    <div class="card-header">Registro</div>
+    <div class="card-body">
+      {% if error_message %}
+        <div class="alert alert-danger" role="alert">{{ error_message }}</div>
+      {% endif %}
+      <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="username">Usuario</label>
+          <input type="text" class="form-control" id="username" name="username" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Correo</label>
+          <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+          <label for="password1">Clave</label>
+          <input type="password" class="form-control" id="password1" name="password1" required>
+        </div>
+        <div class="form-group">
+          <label for="password2">Confirmacion de Clave</label>
+          <input type="password" class="form-control" id="password2" name="password2" required>
+        </div>
+        <div class="form-group">
+          <label for="date_of_birth">Fecha de Nacimiento</label>
+          <input type="date" class="form-control" id="date_of_birth" name="date_of_birth" required>
+        </div>
+          <div class="form-group">
+          <label for="gender">Género</label>
+          <select class="form-control" id="gender" name="gender" required>
+          <option value="Hombre">Hombre</option>
+          <option value="Mujer">Mujer</option>
+          <option value="No Especificar">No Especificar</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="peso">Peso</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="peso" name="peso" min="30" max="201" required>
+            <div class="input-group-append">
+              <span class="input-group-text">Kg</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label for="altura">Altura</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="altura" name="altura" min="50" max="251" required>
+            <div class="input-group-append">
+              <span class="input-group-text">cm</span>
+            </div>
+          </div>
+        </div>
+
+
+
+        <!--
+        <div class="form-group">
+          <label for="peso">Peso</label>
+          <select class="form-control" id="peso" name="peso"> No esta como requerido (required al final)
+            <option value="">Selecciona un peso</option>
+            {% for peso in pesos %}
+              <option value="{{ peso }}">{{ peso }} kg</option>
+            {% endfor %}
+          </select>
+        </div>
+        
+        <div class="form-group">
+        <label for="objetivo">Objetivo</label>
+        <select class="form-control" id="objetivo" name="objetivo">
+        <option value="">Selecciona un objetivo</option>
+        <option value="Masa Muscular">Masa Muscular</option>
+        <option value="Definicion">Definición</option>
+        <option value="Perdida de peso">Pérdida de Peso</option>
+        <option value="Rehabilitación">Rehabilitación</option>
+        </select>
+        </div>-->
+
+        <!------------------------------------------->
+        <!-- Campos adicionales para Masa Muscular -->
+        <!------------------------------------------->
+
+          <!--Nivel de activida-->
+        <div class="form-group additional-fields" id="naf-muscular-fields">
+          <label for="nivel_actividad_fisica_m">Nivel de Actividad Física</label>
+          <select class="form-control" id="nivel_actividad_fisica_m" name="nivel_actividad_fisica_m">
+            <option value="Nulo">Nulo</option>
+            <option value="Baja">Baja (1-4hrs x semana)</option>
+            <option value="Media">Media (5-9hrs x semana)</option>
+            <option value="Alto">Alto (10-14hrs x semana)</option>
+            <option value="Muy Alto">Muy Alto (+15hrs x semana)</option>
+          </select>
+        </div>
+          <!--Nivel de experiencia-->
+        <div class="form-group additional-fields" id="nee-muscular-fields">
+          <label for="nivel_experiencia_entrenamiento_m">Nivel de Experiencia en Entrenamiento</label>
+          <select class="form-control" id="nivel_experiencia_entrenamiento_m" name="nivel_experiencia_entrenamiento_m">
+            <option value="Nulo">Nulo</option>
+            <option value="Baja">Baja (-6 Meses)</option>
+            <option value="Media">Media (1-2 Años)</option>
+            <option value="Alto">Alto (2-3 años)</option>
+            <option value="Muy alta">Muy Alto (+3 años)</option>
+          </select>
+        </div>
+          <!--Objetivo ganancia muscular-->
+        <div class="form-group additional-fields" id="og-muscular-fields">
+          <label for="obj_ganancia_m">Obj de Ganancia Muscular</label>
+          <div class="input-group">
+            <input type="number" step="0.5" class="form-control" id="obj_ganancia_m" name="obj_ganancia_m" min="0" max="20">
+            <div class="input-group-append">
+              <span class="input-group-text">Kg</span>
+            </div>
+          </div>
+        </div> 
+ 
+        <div class="form-group additional-fields" id="d-muscular-fields">
+          <label for="disponibilidad_m">Disponibilidad (horas/semana)</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="disponibilidad_m" name="disponibilidad_m" min="0" max="168">
+            <div class="input-group-append">
+              <span class="input-group-text">hrs</span>
+            </div>
+          </div>
+        </div>
+
+        <!---------------------------------------->
+        <!-- Campos adicionales para Definición -->
+        <!---------------------------------------->
+
+          <!--Nivel de activida-->
+        <div class="form-group additional-fields" id="naf-definicion-fields">
+          <label for="nivel_actividad_fisica_d">Nivel de Actividad Física</label>
+          <select class="form-control" id="nivel_actividad_fisica_d" name="nivel_actividad_fisica_d">
+            <option value="Nulo">Nulo</option>
+            <option value="Baja">Baja (1-4hrs x semana)</option>
+            <option value="Media">Media (5-9hrs x semana)</option>
+            <option value="Alto">Alto (10-14hrs x semana)</option>
+            <option value="Muy Alto">Muy Alto (+15hrs x semana)</option>
+          </select>
+        </div>
+          <!--Nivel de experiencia-->
+        <div class="form-group additional-fields" id="nee-definicion-fields">
+          <label for="nivel_experiencia_entrenamiento_d">Nivel de Experiencia en Entrenamiento</label>
+          <select class="form-control" id="nivel_experiencia_entrenamiento_d" name="nivel_experiencia_entrenamiento_d">
+            <option value="Nulo">Nulo</option>
+            <option value="Baja">Baja (-6 Meses)</option>
+            <option value="Media">Media (1-2 Años)</option>
+            <option value="Alto">Alto (2-3 años)</option>
+            <option value="Muy alta">Muy Alto (+3 años)</option>
+          </select>
+        </div>
+          <!--Obj de definicion-->
+        <div class="form-group additional-fields" id="od-definicion-fields">
+          <label for="obj_definicion_d">Objetivo de Definición Muscular</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="obj_definicion_d" name="obj_definicion_d" min="0" max="40">
+            <div class="input-group-append">
+              <span class="input-group-text">% grasa deseado</span>
+            </div>
+          </div>
+        </div>
+          <!--Disponibilidad-->
+        <div class="form-group additional-fields" id="d-definicion-fields">
+          <label for="disponibilidad_d">Disponibilidad (horas/semana)</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="disponibilidad_d" name="disponibilidad_d" min="0" max="168">
+            <div class="input-group-append">
+              <span class="input-group-text">hrs</span>
+            </div>
+          </div>
+        </div>
+
+        <!--------------------------------------------->
+        <!-- Campos adicionales para Pérdida de Peso -->
+        <!--------------------------------------------->
+
+          <!--IMC-->
+        <div class="form-group additional-fields" id="perdida-peso-fields">
+          <label for="imc">IMC</label>
+          <input type="number" class="form-control" id="imc" name="imc" min="0" max="100">
+        </div>
+          <!--Obejetivo de perdida de peso-->
+        <div class="form-group additional-fields" id="perdida-peso-objetivo-fields">
+          <label for="perdida_peso_objetivo">Objetivo de Pérdida de Peso</label>
+          <input type="number" class="form-control" id="perdida_peso_objetivo" name="perdida_peso_objetivo" min="0" max="100">
+        </div>
+          <!--Nivel de Actividad fisica actual-->
+        <div class="form-group additional-fields" id="nafp-perdida-fields">
+          <label for="nivel_actividad_fisica_perdida">Nivel de Actividad Física</label>
+          <select class="form-control" id="nivel_actividad_fisica_perdida" name="nivel_actividad_fisica_perdida">
+            <option value="Nulo">Nulo</option>
+            <option value="Baja">Baja (1-4hrs x semana)</option>
+            <option value="Media">Media (5-9hrs x semana)</option>
+            <option value="Alto">Alto (10-14hrs x semana)</option>
+            <option value="Muy Alto">Muy Alto (+15hrs x semana)</option>
+          </select>
+        </div>
+
+        <!--Falta poner preferencia de entrenamiento-->
+          <!--Disponibilidad horaria-->
+        <div class="form-group additional-fields" id="d-perdida-fields">
+          <label for="disponibilidad_perdida">Disponibilidad (horas/semana)</label>
+          <div class="input-group">
+            <input type="number" class="form-control" id="disponibilidad_perdida" name="disponibilidad_perdida" min="0" max="168">
+            <div class="input-group-append">
+              <span class="input-group-text">hrs</span>
+            </div>
+          </div>
+        </div>
+
+        <!------------------------------------------->
+        <!-- Campo adicionales para Rehabilitación -->
+        <!------------------------------------------->
+
+        <div class="form-group additional-fields" id="rehabilitacion-fields">
+          <label for="diagnostico_medico">Diagnóstico Médico</label>
+          <textarea class="form-control" id="diagnostico_medico" name="diagnostico_medico" rows="3"></textarea>
+        </div>
+        
+        <button type="submit">Registrarse</button>
+        <button onclick="window.location.href='/'" class="btn btn-secondary btn-volver">Volver</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Obtener el elemento select del objetivo
+  const objetivoSelect = document.getElementById('objetivo');
+  // Obtener los elementos de los campos adicionales
+  //Campos de Masa Muscular
+  const masaMuscularFields = document.getElementById('naf-muscular-fields');
+  const experienciaEntrenamientoFields = document.getElementById('nee-muscular-fields');
+  const objGananciaFields = document.getElementById('og-muscular-fields');
+  const dispoFields = document.getElementById('d-muscular-fields');
+  //Campos de Definicion
+  const definicion_naf_fields = document.getElementById('naf-definicion-fields')
+  const definicionFields = document.getElementById('nee-definicion-fields');
+  const definicionObjetivoFields = document.getElementById('od-definicion-fields');
+  const definicionDispoFields = document.getElementById('d-definicion-fields')
+  //Campos de Perdida de peso
+  const perdidaPesoFields = document.getElementById('perdida-peso-fields');
+  const perdidaPesoObjetivoFields = document.getElementById('perdida-peso-objetivo-fields');
+  const perdidaPesoNivelActividadFields = document.getElementById('nafp-perdida-fields')
+        //Falta poner preferencia de entrenamiento
+  const perdidaPesoDefinicionFields = document.getElementById('d-perdida-fields')
+  //Campos de Rehabilitacion
+  const rehabilitacionFields = document.getElementById('rehabilitacion-fields');
+  
+  // Función para mostrar los campos adicionales correspondientes al objetivo seleccionado
+  function mostrarCamposAdicionales() {
+    const objetivo = objetivoSelect.value;
+    // Ocultar todos los campos adicionales
+    ocultarCamposAdicionales();
+    
+    // Mostrar los campos adicionales correspondientes al objetivo seleccionado
+    if (objetivo === 'Masa Muscular') {
+      masaMuscularFields.style.display = 'block';
+      experienciaEntrenamientoFields.style.display = 'block';
+      objGananciaFields.style.display = 'block';
+      dispoFields.style.display = 'block';
+    } else if (objetivo === 'Definicion') {
+      definicion_naf_fields.style.display = 'block';
+      definicionFields.style.display = 'block';
+      definicionObjetivoFields.style.display = 'block';
+      definicionDispoFields.style.display = 'block';
+    } else if (objetivo === 'Perdida de peso') {
+      perdidaPesoFields.style.display = 'block';
+      perdidaPesoObjetivoFields.style.display = 'block';
+      perdidaPesoNivelActividadFields.style.display = 'block';
+      perdidaPesoDefinicionFields.style.display = 'block';
+    } else if (objetivo === 'Rehabilitación') {
+      rehabilitacionFields.style.display = 'block';
+    }
+  }
+  
+  // Función para ocultar todos los campos adicionales
+  function ocultarCamposAdicionales() {
+    //Campos ganancia muscular
+    masaMuscularFields.style.display = 'none';
+    experienciaEntrenamientoFields.style.display = 'none';
+    objGananciaFields.style.display = 'none';
+    dispoFields.style.display = 'none';
+    // Campos Definicion
+    definicion_naf_fields.style.display = 'none';
+    definicionFields.style.display = 'none';
+    definicionObjetivoFields.style.display = 'none';
+    definicionDispoFields.style.display = 'none';
+    // Campos Perdida de peso
+    perdidaPesoFields.style.display = 'none';
+    perdidaPesoObjetivoFields.style.display = 'none';
+    perdidaPesoNivelActividadFields.style.display = 'none';
+        //Falta poner preferencia de entrenamiento
+    perdidaPesoDefinicionFields.style.display = 'none';
+
+    rehabilitacionFields.style.display = 'none';
+    }
+
+// Agregar un event listener al cambio de selección del objetivo
+objetivoSelect.addEventListener('change', mostrarCamposAdicionales);
+
+// Mostrar los campos adicionales iniciales al cargar la página
+mostrarCamposAdicionales();
+</script>
+{% endblock %}
+    
+

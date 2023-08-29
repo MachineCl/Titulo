@@ -1,0 +1,328 @@
+<!-- formulario_perdida_peso.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario - Pérdida de Peso</title>
+    <style>
+        .input-group {
+          position: relative;
+          display: flex;
+        }
+    
+        .input-group .form-control {
+          border-right: none;
+          border-radius: 3px 0 0 3px;
+        }
+    
+        .input-group .input-group-text {
+          display: flex;
+          align-items: center;
+          padding: 0 10px;
+          background-color: #e9ecef;
+          border: 1px solid #ced4da;
+          border-left: none;
+          border-radius: 0 3px 3px 0;
+        }
+    
+    
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f8f8f8;
+          margin: 0;
+          padding: 20px;
+        }
+      
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+      
+        form {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+      
+        label {
+          display: block;
+          margin-bottom: 10px;
+        }
+      
+        textarea,
+        select,
+        input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+      
+        input[type="submit"] {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      
+        input[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+        .btn-back {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-back a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back a:hover {
+            background-color: #0056b3;
+        }
+        .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-top: 20px; /* Espacio adicional arriba del botón */
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        .message-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none; /* Ocultamos inicialmente */
+            z-index: 9999;
+        }
+
+        .message-modal p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .message-modal.show {
+            display: block; /* Mostramos cuando se activa */
+        } 
+      </style>
+</head>
+<body>
+    <h1>Formulario - Pérdida de Peso</h1>
+    <form id="myForm" method="post" action="" onsubmit="showMessage();">
+
+      <!-- Diagnóstico médico --> 
+      <div class="form-group" id="dm-definicion-fields">
+        <label for="diagnostico_medico_d">¿Tiene limitaciones?</label>
+        <select class="form-control" id="diagnostico_medico_d" name="diagnostico_medico_d" required>
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Si">Si</option>
+          <option value="No">No</option>
+        </select>
+      </div>
+
+      <!-- Lista desplegable adicional para las limitaciones -->
+      <div class="form-group additional-fields" id="limitaciones-fields" style="display: none;">
+        <label for="diagnostico_medico">¿Que limitacion tiene para hacer ejercicios?</label>
+        <select class="form-control" id="diagnostico_medico" name="diagnostico_medico">
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Esguince">Esguince</option>
+          <option value="Tendinitis">Tendinitis</option>
+          <option value="Bursitis">Bursitis</option>
+          <option value="Fractura">Fractura</option>
+          <option value="Hernia">Hernia</option>
+          <option value="Desgarro Muscular">Desgarro Muscular</option>
+          <option value="Síndrome">Síndrome</option>
+          <option value="Tensión Muscular">Tensión Muscular</option>
+          <option value="Luxación">Luxación</option>
+          <option value="Distensión de Ligamento">Distensión de Ligamento</option>
+          <option value="Contusión">Contusión</option>
+          <option value="Contractura">Contractura</option>
+          <option value="Tendinosis">Tendinosis</option>
+          <option value="Espasmo Muscular">Espasmo Muscular</option>
+          <option value="Dislocación">Dislocación</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+
+      <div class="form-group additional-fields" id="otra-limitacion-field" style="display: none;">
+        <label for="otra_limitacion">Especifica esa limitación</label>
+        <input type="text" class="form-control" id="otra_limitacion" name="otra_limitacion" style="width: 100%; margin-bottom: 10px;">
+      </div>
+  
+      <!-- Lista desplegable adicional para los lugares donde puede estar con limitaciones -->
+      <div class="form-group additional-fields" id="lugares-limitacion-fields" style="display: none;">
+        <label for="lugares_limitacion">Lugar en donde esta esta limitación</label>
+        <select class="form-control" id="lugares_limitacion" name="lugares_limitacion">
+          <option value="" disabled selected>Seleccione una opción</option>
+          <option value="Tobillo">Tobillo</option>
+          <option value="Rodilla">Rodilla</option>
+          <option value="Muslos y Piernas">Muslos y Piernas</option>
+          <option value="Cadera">Cadera</option>
+          <option value="Espalda">Espalda</option>
+          <option value="Hombro">Hombro</option>
+          <option value="Codo">Codo</option>
+          <option value="Muñeca y Mano">Muñeca y Mano</option>
+          <option value="Pies">Pies</option>
+          <option value="Cuello">Cuello</option>
+          <option value="Columna Vertebral">Columna Vertebral</option>
+          <option value="Pecho">Pecho</option>
+          <option value="Abdomen">Abdomen</option>
+          <option value="Cabeza">Cabeza</option>
+          <option value="Otro">Otro</option>
+        </select>
+      </div>
+  
+      <div class="form-group additional-fields" id="otro-lugar-field" style="display: none;">
+        <label for="otro_lugar">Especifica el lugar de la limitacion</label>
+        <input type="text" class="form-control" id="otro_lugar" name="otro_lugar" style="width: 100%; margin-bottom: 10px;">
+      </div>
+
+        <div class="form-group additional-fields" id="perdida-peso-objetivo-fields">
+            <label for="perdida_peso_objetivo">Objetivo de Pérdida de Peso</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="perdida_peso_objetivo" name="perdida_peso_objetivo" min="0" max="100" required>
+                <div class="input-group-append">
+                    <span class="input-group-text">Kg</span>
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-group additional-fields" id="nafp-perdida-fields">
+            <label for="nivel_actividad_fisica_p">Nivel de Actividad Física</label>
+            <select class="form-control" id="nivel_actividad_fisica_p" name="nivel_actividad_fisica_p" required>
+                <option value="" disabled selected>Seleccione una opción</option>
+                <option value="Nulo">Nulo</option>
+                <option value="Baja de 1 a 4 hrs semanales">Baja (1-4hrs x semana)</option>
+                <option value="Media de 5 a 9 hrs semanales">Media (5-9hrs x semana)</option>
+                <option value="Alto de 10 a 14 hrs semanales">Alto (10-14hrs x semana)</option>
+                <option value="Muy Alto mas de 15 hrs semanales">Muy Alto (+15hrs x semana)</option>
+            </select>
+        </div>
+        
+        <div class="form-group additional-fields" id="d-definicion-fields">
+            <label for="disponibilidad">Disponibilidad (días y horas/semana)</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="disponibilidad_d" name="disponibilidad_d" min="0" max="7" required>
+                <div class="input-group-append">
+                    <span class="input-group-text">días</span>
+                </div>
+                <input type="number" class="form-control" id="disponibilidad_h" name="disponibilidad_h" min="0" max="24" required>
+                <div class="input-group-append">
+                    <span class="input-group-text">horas</span>
+                </div>
+            </div>
+        </div>
+        <form id="myForm" onsubmit="submitForm();">
+            {% csrf_token %}
+            <input type="hidden" name="hiddenMessage" id="hiddenMessage" value="">
+            <button type="submit" class="btn-submit">Enviar</button>
+        </form>
+    </form>
+    <div id="messageModal" class="message-modal">
+      <p>Generardo tu respuesta, espera un momento...</p>
+    </div>
+    <div class="btn-back">
+      <a href="/">Volver al Inicio</a>
+      <a href="/casillas">Volver a Ejercicios</a>
+    </div>    
+</body>
+    <script>
+    document.getElementById('diagnostico_medico_d').addEventListener('change', function() {
+      var limitacionesField = document.getElementById('limitaciones-fields');
+      var otraLimitacionField = document.getElementById('otra-limitacion-field');
+      var lugaresLimitacionField = document.getElementById('lugares-limitacion-fields');
+      var otroLugarField = document.getElementById('otro-lugar-field');
+    
+      if (this.value === 'Si') {
+        limitacionesField.style.display = 'block';
+        lugaresLimitacionField.style.display = 'block';
+        document.getElementById('diagnostico_medico').setAttribute('required', 'required');
+        document.getElementById('lugares_limitacion').setAttribute('required', 'required');
+      } else {
+        limitacionesField.style.display = 'none';
+        otraLimitacionField.style.display = 'none';
+        lugaresLimitacionField.style.display = 'none';
+        otroLugarField.style.display = 'none';
+        document.getElementById('diagnostico_medico').removeAttribute('required');
+        document.getElementById('otra_limitacion').removeAttribute('required');
+        document.getElementById('lugares_limitacion').removeAttribute('required');
+        document.getElementById('otro_lugar').removeAttribute('required');
+      }
+    });
+
+    // Mostrar u ocultar el campo de texto adicional cuando se selecciona "Otro" en limitaciones
+    document.getElementById('diagnostico_medico').addEventListener('change', function() {
+      var otraLimitacionField = document.getElementById('otra-limitacion-field');
+      if (this.value === 'Otro') {
+        otraLimitacionField.style.display = 'block';
+        document.getElementById('otra_limitacion').setAttribute('required', 'required'); // Requerir el campo "Otro" en limitaciones
+      } else {
+        otraLimitacionField.style.display = 'none';
+        document.getElementById('otra_limitacion').removeAttribute('required'); // Remover la validación requerida para "Otro"
+      }
+    });
+
+    // Mostrar u ocultar el campo de texto adicional cuando se selecciona "Otro" en lugares de limitación
+    document.getElementById('lugares_limitacion').addEventListener('change', function() {
+      var otroLugarField = document.getElementById('otro-lugar-field');
+      if (this.value === 'Otro') {
+        otroLugarField.style.display = 'block';
+        document.getElementById('otro_lugar').setAttribute('required', 'required'); // Requerir el campo "Otro" en lugares de limitación
+      } else {
+        otroLugarField.style.display = 'none';
+        document.getElementById('otro_lugar').removeAttribute('required'); // Remover la validación requerida para "Otro"
+      }
+    });
+
+
+        function submitForm() {
+        // Obtener el mensaje del formulario
+        var message = document.getElementById('message').value;
+        
+        // Construir el objeto de mensaje
+        var chatMessage = {
+            role: 'user',
+            content: message
+        };
+        
+        // Convertir el objeto de mensaje en una cadena JSON
+        var chatMessageJSON = JSON.stringify(chatMessage);
+        
+        // Guardar el mensaje en el almacenamiento local
+        localStorage.setItem('chatMessage', chatMessageJSON);
+        }
+        function showMessage() {
+          var modal = document.getElementById('messageModal');
+          modal.classList.add('show')
+        }
+    </script>
+</html>

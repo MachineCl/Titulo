@@ -1,0 +1,240 @@
+<!-- formulario_perdida_peso.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Formulario - Rehabilitación</title>
+    <style>
+        .input-group {
+          position: relative;
+          display: flex;
+        }
+    
+        .input-group .form-control {
+          border-right: none;
+          border-radius: 3px 0 0 3px;
+        }
+    
+        .input-group .input-group-text {
+          display: flex;
+          align-items: center;
+          padding: 0 10px;
+          background-color: #e9ecef;
+          border: 1px solid #ced4da;
+          border-left: none;
+          border-radius: 0 3px 3px 0;
+        }
+    
+    
+        body {
+          font-family: Arial, sans-serif;
+          background-color: #f8f8f8;
+          margin: 0;
+          padding: 20px;
+        }
+      
+        h1 {
+          text-align: center;
+          margin-bottom: 20px;
+        }
+      
+        form {
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 5px;
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+      
+        label {
+          display: block;
+          margin-bottom: 10px;
+        }
+      
+        textarea,
+        select,
+        input[type="number"] {
+          width: 100%;
+          padding: 10px;
+          border-radius: 3px;
+          border: 1px solid #ccc;
+          box-sizing: border-box;
+          margin-bottom: 10px;
+        }
+      
+        input[type="submit"] {
+          display: block;
+          width: 100%;
+          padding: 10px;
+          background-color: #007bff;
+          color: #fff;
+          border: none;
+          border-radius: 3px;
+          cursor: pointer;
+        }
+      
+        input[type="submit"]:hover {
+          background-color: #0056b3;
+        }
+        .btn-back {
+            display: block;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-back a {
+            display: inline-block;
+            padding: 12px 24px;
+            background-color: #007bff;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-back a:hover {
+            background-color: #0056b3;
+        }
+        .btn-submit {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        background-color: #007bff;
+        color: #fff;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-top: 20px; /* Espacio adicional arriba del botón */
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+        .message-modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: none; /* Ocultamos inicialmente */
+            z-index: 9999;
+        }
+
+        .message-modal p {
+            margin: 0;
+            margin-bottom: 10px;
+        }
+
+        .message-modal.show {
+            display: block; /* Mostramos cuando se activa */
+        } 
+      </style>
+</head>
+<body>
+    <h1>Formulario - Rehabilitación</h1>
+    <form id="myForm" method="post" action="" onsubmit="showMessage();">
+        <!-- Diagnostico medico -->
+        <div class="form-group" id="r-diagnostico-medico-fields">
+            <label for="diagnostico_medico">Diagnóstico Médico</label>
+            <textarea class="form-control" id="diagnostico_medico" name="diagnostico_medico" rows="3" required></textarea>
+        </div>
+        
+        <!-- Historial medico -->
+        <div class="form-group" id="r-historial-medico-fields"> 
+            <label for="historial_medico">Historial Médico</label>
+            <textarea class="form-control" id="historial_medico" name="historial_medico" rows="3" required></textarea>
+        </div>
+        
+        <!-- Evaluación física -->
+        <div class="form-group" id="r-evaluacion-fisica-fields">
+            <label for="evaluacion_fisica">Evaluación Física</label>
+            <textarea class="form-control" id="evaluacion_fisica" name="evaluacion_fisica" rows="3" required></textarea>
+        </div>
+        
+        <!-- Historial de actividad fisica -->
+        <div class="form-group" id="r-historial-actividad-fisica-fields">
+            <label for="historial_actividad_fisica">Historial de Actividad Física</label>
+            <textarea class="form-control" id="historial_actividad_fisica" name="historial_actividad_fisica" rows="3" required></textarea>
+        </div>
+        
+        <!-- Obj de la rehabilitacion -->
+        <div class="form-group" id="r-objetivo-rehabilitacion">
+            <label for="objetivo_rehabilitacion">Objetivo de la Rehabilitación</label>
+            <textarea class="form-control" id="objetivo_rehabilitacion" name="objetivo_rehabilitacion" rows="3" required></textarea>
+        </div>
+        
+        <!-- Recursos disponibles -->
+        <div class="form-group" id="r-recursos-disponibles">
+            <label for="recursos_disponibles">Recursos Disponibles</label>
+            <textarea class="form-control" id="recursos_disponibles" name="recursos_disponibles" rows="3" required></textarea>
+        </div>
+        
+        <!-- Disponibilidad -->
+        <div class="form-group additional-fields" id="r-dispo-fields">
+            <label for="disponibilidad">Disponibilidad (días y horas/semana)</label>
+            <div class="input-group">
+                <input type="number" class="form-control" id="disponibilidad_d" name="disponibilidad_d" min="0" required>
+                <div class="input-group-append">
+                    <span class="input-group-text">días</span>
+                </div>
+                <input type="number" class="form-control" id="disponibilidad_h" name="disponibilidad_h" min="0" max="24" required>
+                <div class="input-group-append">
+                    <span class="input-group-text">horas</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Restricción y limitaciones -->
+        <div class="form-group" id="r-restriccion-limitaciones-fields">
+            <label for="restriccion_limitaciones">Restricción y Limitaciones</label>
+            <textarea class="form-control" id="restriccion_limitaciones" name="restriccion_limitaciones" rows="3" required></textarea>
+        </div>
+        
+        <!-- Condiciones del entorno -->
+        <div class="form-group" id="r-condiciones-entorno-fields>
+            <label for="condiciones_entorno">Condiciones del Entorno</label>
+            <textarea class="form-control" id="condiciones_entorno" name="condiciones_entorno" rows="3" required></textarea>
+        </div>
+        
+        <form id="myForm" onsubmit="submitForm();">
+            {% csrf_token %}
+            <input type="hidden" name="hiddenMessage" id="hiddenMessage" value="">
+            <button type="submit" class="btn-submit">Enviar</button>
+        </form>
+    </form>
+    <div id="messageModal" class="message-modal">
+      <p>Generardo tu respuesta, espera un momento...</p>
+    </div>
+    <div class="btn-back">
+      <a href="/">Volver al Inicio</a>
+      <a href="/casillas">Volver a Ejercicios</a>
+    </div> 
+</body>
+    <script>
+        function submitForm() {
+        // Obtener el mensaje del formulario
+        var message = document.getElementById('message').value;
+        
+        // Construir el objeto de mensaje
+        var chatMessage = {
+            role: 'user',
+            content: message
+        };
+        
+        // Convertir el objeto de mensaje en una cadena JSON
+        var chatMessageJSON = JSON.stringify(chatMessage);
+        
+        // Guardar el mensaje en el almacenamiento local
+        localStorage.setItem('chatMessage', chatMessageJSON);
+        }
+        function showMessage() {
+          var modal = document.getElementById('messageModal');
+          modal.classList.add('show')
+        }
+    </script>
+</html>
