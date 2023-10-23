@@ -1,6 +1,9 @@
 from django.urls import path
 from . import views
 from django.contrib.auth.decorators import login_required
+from django.conf import settings
+from django.conf.urls.static import static
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('chatbot', views.chatbot, name='chatbot'),
@@ -19,5 +22,9 @@ urlpatterns = [
     path('', views.inicio, name='inicio'),
     path('index', views.index, name='index'),
     path('pesos', login_required(views.pesos), name='pesos'),
-    path('configuracion', login_required(views.configuracion), name='configuracion')
+    path('configuracion', login_required(views.configuracion), name='configuracion'),
+    path('<path:dummy>', RedirectView.as_view(url='/', permanent=False), name='catch-all'),
 ]
+
+if settings.DEBUG:
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

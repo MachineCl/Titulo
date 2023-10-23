@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from django.conf.locale.es import formats as es_formats
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'chatbot',
     'django.contrib.humanize',
+    
 ]
 
 MIDDLEWARE = [
@@ -126,6 +128,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+
+
 #Al subir sacar el correo
 
 
@@ -135,3 +139,9 @@ LOGIN_URL = '/login'
 es_formats.DATETIME_FORMAT = "d M Y H:i"
 es_formats.DATE_FORMAT = "d M Y"
 es_formats.TIME_FORMAT = "H:i"
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
