@@ -212,7 +212,7 @@
             <ul class="navbar-nav ms-md-auto">
               {% if user.is_authenticated %}
               <li class="nav-item">
-                <div class="nav-link" href="#">
+                <div class="nav-link" href="#" style="color: white;">
                   Hola {{ user.username|capfirst }}
                 </div>
               </li>
@@ -220,6 +220,7 @@
                 <button
                   class="nav-link"
                   onclick="window.location.href='/logout'"
+                  style="color: white;"
                 >
                   Cerrar sesión
                 </button>
@@ -229,6 +230,7 @@
                 <button
                   class="nav-link"
                   onclick="window.location.href='/login'"
+                  style="color: white;"
                 >
                   Iniciar Sesión
                 </button>
@@ -237,6 +239,7 @@
                 <button
                   class="nav-link"
                   onclick="window.location.href='/register'"
+                  style="color: white;"
                 >
                   Registrarse
                 </button>
